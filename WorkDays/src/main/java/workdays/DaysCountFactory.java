@@ -64,8 +64,9 @@ public class DaysCountFactory {
 		final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 		int startYear = Integer.parseInt(yearFormat.format(startPoint));
 		int endYear = Integer.parseInt(yearFormat.format(endPoint));
+		List<Date> events = new ArrayList<Date>();
 		for(int i = startYear; i<endYear+1; i++) {
-			List<Date> events = createHolidayListForYear(startYear);
+			events = createHolidayListForYear(i);
 			for(Date event: events) {
 				if(checkHoliday(startPoint, endPoint, event)) {
 					eventsCount++;
@@ -83,6 +84,7 @@ public class DaysCountFactory {
 		tab.add("0601");
 		
 		String esterMonaday;
+		String christiBody;
 		int magicA = 24;
 		int magicB = 6;
 		int a=startYear%19;
@@ -90,20 +92,25 @@ public class DaysCountFactory {
 		int c=startYear%7;
 		int d=(19*a + magicA)%30;
 		int e=(2*b+4*c+6*d+magicB)%7;
-		if(e+d<9) {
-			esterMonaday=d+e+23+"03";
+		if(d+e<10) {
+			esterMonaday=d+e+22+"03";
 		}else {
-			esterMonaday=d+e-8+"04";
+			esterMonaday=d+e-9+"04";
 		}
 		tab.add(esterMonaday);
 		tab.add("0105");
 		tab.add("0305");
+		if(d+e<12) {
+			christiBody=d+e+20+"05";
+		}else {
+			christiBody=d+e-11+"06";
+		}
+		tab.add(christiBody);
 		tab.add("1508");
 		tab.add("0111");
 		tab.add("1111");
 		tab.add("2512");
 		tab.add("2612");
-		//TODO: add Boze Cialo, 60dni po wielkanocy
 		List<Date> holidayList = new ArrayList<Date>();
 		for(String day: tab ) {
 			try {
