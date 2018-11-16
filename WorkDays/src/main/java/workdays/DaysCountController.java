@@ -36,8 +36,18 @@ public class DaysCountController {
     		try {
 				endPoint= dateFormat.parse(endDate);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				throw new IllegalArgumentException("Date: "+endDate+" do not match format ddMMyyyy");
 			}
+    	}
+    	
+    	if(startPoint.after(endPoint)) {
+    		throw new IllegalArgumentException(new StringBuilder().
+    												append("Date: ").
+    												append(endDate).
+    												append(" before ").
+    												append(startPoint).
+    												append(". Report for the past is not in the scope of this service.")
+    												.toString());
     	}
     	
     	return DaysCountFactory.createReport(startPoint, endPoint);

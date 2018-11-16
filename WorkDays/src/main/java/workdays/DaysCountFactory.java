@@ -70,7 +70,6 @@ public class DaysCountFactory {
 			for(Date event: events) {
 				if(checkHoliday(startPoint, endPoint, event)) {
 					eventsCount++;
-					System.out.println(event);
 				}
 			}
 		}		
